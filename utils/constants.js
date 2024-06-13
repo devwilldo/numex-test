@@ -9,6 +9,10 @@ export const SIGN_UP_PAGE = 'https://numex-staging.azurewebsites.net/'
 
 
 // TEST DATA
+export const Login_data = {
+    email: 'kshugah1@gmail.com',
+    password: '1'
+}
 
 //SELECTORS
 export const LOGIN_PAGE_SELECTORS = {

@@ -1,4 +1,5 @@
 const {test,expect} = require('@playwright/test');
+const { Sign } = require('crypto');
 
 // begin test
 test.describe('Basic Ui',()=>
@@ -32,11 +33,17 @@ test.describe('Basic Ui',()=>
                         gs.click();
                         await expect(page).toHaveTitle("Numex");
                         await page.getByRole('button', { name: 'Sign in' }).click();
-                        console.log(await page.title())
-
+                        
+                        //await page.getByRole('button', { name: 'Sign in' }).click();
+                        await expect(page).toHaveTitle('Sign in to Numex Staging');
+                        console.log(await page.title());      
+                    }
+                );
+                test('Test Value',async({page})=>
+                    {
 
                     }
-                )
+                );
             }
         )
     }
