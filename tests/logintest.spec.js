@@ -24,7 +24,7 @@ test.describe('LOGIN PROCEDURE TEST',()=>
                         expect(page.toHaveTitle('Sign In to Numex'));
                         console.log(page.title()); */
 
-                        await page.goto('https://numex.app');
+                        await page.goto('https://test-numex-service.azurewebsites.net/');
                         await expect(page).toHaveTitle("Numex App – Welcome");
                         const gs = await page.getByRole('link', {name: 'Get Started'});
                         gs.click();
@@ -55,7 +55,19 @@ test.describe('LOGIN PROCEDURE TEST',()=>
         );
         test('CHECK IF LOGIN PAGE IS ACCESSIBLE ',async({page})=>
             {
+                await page.goto('/');
+                await page.locator('p.mt-2.text-center.text-sm.text-gray-400').click();
+                //await page.locator("//button[@id='signIn']").click();
                 
+                // Use XPath to locate the first grid item
+const gridItem = await page.locator("//body/div[@id='root']/div[@class='h-screen w-full bg-[#f1f5f9]']/div[@class='min-h-full flex flex-col p-4 bg-[#f1f5f9]']/div[contains(@class,'flex flex-col flex-grow items-center justify-center')]/div[@class='max-w-7xl mx-auto py-20 px-4 bg-[#f1f5f9] sm:px-6 lg:px-8']/div[@class='mt-6 grid md:grid-cols-2 lg:space-y-0 lg:grid-cols-4 gap-4']/div[1]");
+
+// Highlight it
+await page.evaluate((element) => {
+  element.style.border = '3px solid red';
+  element.style.backgroundColor = '#fff89a';
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}, await gridItem.elementHandle());
             }
         )
     }
