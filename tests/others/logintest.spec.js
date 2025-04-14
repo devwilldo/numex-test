@@ -1,6 +1,6 @@
 const {test,expect} = require('@playwright/test');
 import exp from 'constants';
-import {} from '../utils/constants';
+import {} from '../../utils/constants';
 
 test.describe('LOGIN PROCEDURE TEST',()=>
     {
