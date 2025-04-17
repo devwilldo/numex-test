@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { baseUrl,Credentials } from '../../utils/helper.js';
+import { baseUrl, Credentials } from '../../utils/helper.js';
 const signInurl = 'https://axonauth.azurewebsites.net/auth/realms/numexdev/protocol/openid-connect/auth?client_id=numex&redirect_uri=https%3A%2F%2Ftest-numex-service.azurewebsites.net%2F&state=a3346baf-f5e5-4770-90e3-59c721441a69&response_mode=fragment&response_type=code&scope=openid&nonce=3656a5bc-0f41-4d13-a089-0f50c4386e7a'
 test.describe('All Auth tests', () => {
    test.describe('Login Page Process Validation', () => {
@@ -34,14 +34,14 @@ test.describe('All Auth tests', () => {
          await page.waitForTimeout(3000);
       })
    });
-   test.describe('Sign Up',()=>{
-      test('Successfull Registration',async ({page})=>{
+   test.describe('Sign Up', () => {
+      test('Successfull Registration', async ({ page }) => {
          await page.goto(`${baseUrl}`);
-         const freebtn = await page.locator('button#001');
-         await page.click(freebtn);
-         await expect(page.locator('p', { hasText: 'GHS 0 /month' }).first());
-         await page.locator('#first-name').click().fill(Credentials.newUser.firstName);
-         await page.locator('#last-name').click().fill(Credentials.newUser.lastName);
+         await page.locator('[id="\\30 01"]').click();
+         //await page.click(freebtn);
+         await expect(page.getByText('GHS 0 /month')).toBeVisible();
+         await page.locator('#first-name').fill(Credentials.newUser.firstName);
+         await page.locator('#last-name').fill(Credentials.newUser.lastName);
          const emailInput = page.locator('#email-address');
          await emailInput.click(); // Focus the input (optional, but useful for some UIs)
          await emailInput.fill(Credentials.newUser.email);
@@ -55,25 +55,24 @@ test.describe('All Auth tests', () => {
          const vatCheckbox = page.locator('#vatRegistered');
          if (!(await vatCheckbox.isChecked())) {
             await vatCheckbox.click();
-          }
+         }
+         const standardRadio = page.locator('#standard');
+
+         if (!(await standardRadio.isChecked())) {
+            await standardRadio.click();
+         }
+         const isSelected = await standardRadio.isChecked();
+         console.log('Standard radio selected:', isSelected);
          const termsCheckbox = page.locator('#terms');
          if (!(await termsCheckbox.isChecked())) {
             await termsCheckbox.click();
-          }
-          const standardRadio = page.locator('#standard');
-
-          if (!(await standardRadio.isChecked())) {
-            await standardRadio.click();
-          }
-          const isSelected = await standardRadio.isChecked();
-          console.log('Standard radio selected:', isSelected);
-
-          const signUpButton = page.locator('#signUp');
-          await signUpButton.waitFor({ state: 'visible' });
+         }
+         const signUpButton = page.locator('#signUp');
+         await signUpButton.waitFor({ state: 'visible' });
          if (await signUpButton.isEnabled()) {
-         await signUpButton.click();
-         await page.waitForTimeout(1000);
-}
+            await signUpButton.click();
+            await page.waitForTimeout(1000);
+         }
 
       })
    })
